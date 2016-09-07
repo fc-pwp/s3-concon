@@ -27,3 +27,8 @@ def list_quiz(request):
         'quizzes': quizzes,
     }
     return render(request, 'list_quiz.html', ctx)
+
+
+def start_quiz(request, pk):
+    ctx = {}
+    return render(request, 'start_quiz.html', ctx)
