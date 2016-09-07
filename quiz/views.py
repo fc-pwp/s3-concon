@@ -30,5 +30,11 @@ def list_quiz(request):
 
 
 def start_quiz(request, pk):
-    ctx = {}
+    quiz_info = {
+        'title': '첫 번째 퀴즈입니다!',
+        'pk': pk,
+    }
+    ctx = {
+        'quiz': quiz_info,
+    }
     return render(request, 'start_quiz.html', ctx)
