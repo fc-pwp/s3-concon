@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>퀴즈 목록</title>
+    </head>
+
+    <body>
+        {% for quiz in quizzes %}
+        <div class="quiz_container">
+            <img src="{{ quiz.image }}" alt="퀴즈이미지" />
+            <h3>{{ quiz.title }}</h3>
+            <p>{{ quiz.message }}</p>
+        </div>
+        {% endfor %}
+    </body>
+</html>
