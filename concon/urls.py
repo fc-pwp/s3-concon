@@ -3,9 +3,11 @@ from django.contrib import admin
 
 from quiz.views import toppage
 from quiz.views import list_quiz
+from quiz.views import start_quiz
 
 
 urlpatterns = [
+    url(r'^quiz/([0-9]+)/$', start_quiz), # /quiz/1/
     # url(r'^list/$', list_quiz),  # /list/
     url(r'^$', list_quiz),
     # url(r'^$', toppage),
