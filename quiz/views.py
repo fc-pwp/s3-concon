@@ -23,14 +23,28 @@ def list_quiz(request):
         },
     ]
 
-    if 'page' in request.GET:
-        page = request.GET['page']
-    else:
-        page = '페이지가 없습니다.'
+
+
+
+
+    try:
+        page = int(request.GET.get('page', 1))
+    except (TypeError, ValueError, ):
+        page = 1
+
+    # page int
+    if True:  # 뭔가 거창한 조건이 있지만, 현실은 걍 True.
+        page = page + 1
+    # request.POST.get('title', '빈 제목')
+    # if 'page' in request.GET:
+    #     page = request.GET['page']
+    # else:
+    #     page = 1
 
     ctx = {
         'quizzes': quizzes,
         'page': page,
+        # 'page': request.GET['page'],
     }
     return render(request, 'list_quiz.html', ctx)
 
