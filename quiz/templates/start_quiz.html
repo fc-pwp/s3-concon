@@ -9,9 +9,11 @@
 
         <p>자, {{ quiz.pk }}번 퀴즈를 시작하지</p>
 
+        {{ username }}
+
         <form method="POST" action="">
             {% csrf_token %}
-            이름은?
+            <label for="id_username">이름은?</label>
             <input type="text" name="username" id="id_username" />
             <button type="submit">퀴즈 시작!</button>
         </form>
