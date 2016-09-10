@@ -25,6 +25,7 @@ def list_quiz(request):
 
     ctx = {
         'quizzes': quizzes,
+        'page': request.GET['page'],
     }
     return render(request, 'list_quiz.html', ctx)
 
