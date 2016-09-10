@@ -58,7 +58,9 @@ def start_quiz(request, pk):
     if request.method == 'GET':
         quizform = StartQuizForm()
     elif request.method == 'POST':
-        quizform = StartQuizForm()
+        quizform = StartQuizForm(request.POST)
+        if quizform.is_valid():
+            raise Exception('잘 됐네. 다음 수업에서 봅시다.')
 
     quiz_info = {
         'title': '첫 번째 퀴즈입니다!',
