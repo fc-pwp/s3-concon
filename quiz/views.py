@@ -23,9 +23,14 @@ def list_quiz(request):
         },
     ]
 
+    if 'page' in request.GET:
+        page = request.GET['page']
+    else:
+        page = '페이지가 없습니다.'
+
     ctx = {
         'quizzes': quizzes,
-        'page': request.GET['page'],
+        'page': page,
     }
     return render(request, 'list_quiz.html', ctx)
 
