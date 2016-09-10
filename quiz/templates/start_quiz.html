@@ -13,8 +13,8 @@
 
         <form method="POST" action="">
             {% csrf_token %}
-            <label for="id_username">이름은?</label>
-            <input type="text" name="username" id="id_username" />
+
+            {{ form.as_p }}
             <button type="submit">퀴즈 시작!</button>
         </form>
     </body>

@@ -3,7 +3,7 @@ from django import forms
 
 
 class StartQuizForm(forms.Form):
-    username = forms.CharField()
+    username = forms.CharField(label='이름은?')
 
 
 def toppage(request):
@@ -55,22 +55,25 @@ def list_quiz(request):
 
 
 def start_quiz(request, pk):
-    quizform = StartQuizForm()
+    if request.method == 'GET':
+        quizform = StartQuizForm()
+    elif request.method == 'POST':
+        quizform = StartQuizForm()
 
     quiz_info = {
         'title': '첫 번째 퀴즈입니다!',
         'pk': pk,
     }
 
-    if request.method == 'POST':
-        username = request.POST.get('username', '')
-        if len(username) < 2:
-            raise Exception('이름은 두 글자 이상 넣으세요.')
-    else:
-        username = ''
+    # if request.method == 'POST':
+    #     username = request.POST.get('username', '')
+    #     if len(username) < 2:
+    #         raise Exception('이름은 두 글자 이상 넣으세요.')
+    # else:
+    #     username = ''
     ctx = {
         'form': quizform,
         'quiz': quiz_info,
-        'username': username,
+        # 'username': username,
     }
     return render(request, 'start_quiz.html', ctx)
