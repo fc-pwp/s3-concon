@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django import forms
 
+from .models import Quiz
+
 
 class StartQuizForm(forms.Form):
     username = forms.CharField(label='이름은?', min_length=2)
@@ -15,39 +17,15 @@ def toppage(request):
 
 
 def list_quiz(request):
-    quizzes = [
-        {
-            'image': '404.png',
-            'title': '첫 번째 퀴즈',
-            'message': '퀴즈 소개 메시지',
-        },
-        {
-            'image': '404.png',
-            'title': '두 번째 퀴즈',
-            'message': '2번 퀴즈 소개 메시지',
-        },
-    ]
-
-
-
-
-
     try:
         page = int(request.GET.get('page', 1))
     except (TypeError, ValueError, ):
         page = 1
 
-    # page int
-    if True:  # 뭔가 거창한 조건이 있지만, 현실은 걍 True.
-        page = page + 1
-    # request.POST.get('title', '빈 제목')
-    # if 'page' in request.GET:
-    #     page = request.GET['page']
-    # else:
-    #     page = 1
+    contents = Quiz.objects.all()
 
     ctx = {
-        'quizzes': quizzes,
+        'quizzes': contents,
         'page': page,
         # 'page': request.GET['page'],
     }
@@ -79,5 +57,3 @@ def start_quiz(request, pk):
         # 'username': username,
     }
     return render(request, 'start_quiz.html', ctx)
-
-
