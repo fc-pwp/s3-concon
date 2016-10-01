@@ -22,7 +22,12 @@ def list_quiz(request):
     except (TypeError, ValueError, ):
         page = 1
 
+    per_page = 2
+    start = (page - 1) * per_page
+    end = page * per_page
+
     contents = Quiz.objects.all().order_by('-updated')
+    contents = contents[start:end]
 
     ctx = {
         'quizzes': contents,
