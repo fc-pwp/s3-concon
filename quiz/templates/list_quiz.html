@@ -7,9 +7,11 @@
     <body>
         {% for quiz in quizzes %}
         <div class="quiz_container">
-            <img src="{{ quiz.image }}" alt="퀴즈이미지" />
+            <span>{{ quiz.pk }}</span>
+            {% if quiz.image %}
+            <img src="{{ quiz.image.url }}" alt="퀴즈이미지" />
+            {% endif %}
             <h3>{{ quiz.title }}</h3>
-            <p>{{ quiz.message }}</p>
         </div>
         {% endfor %}
 

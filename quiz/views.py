@@ -22,7 +22,7 @@ def list_quiz(request):
     except (TypeError, ValueError, ):
         page = 1
 
-    contents = Quiz.objects.all()
+    contents = Quiz.objects.all().order_by('-updated')
 
     ctx = {
         'quizzes': contents,
