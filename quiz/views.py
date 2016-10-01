@@ -3,7 +3,7 @@ from django import forms
 
 
 class StartQuizForm(forms.Form):
-    username = forms.CharField(label='이름은?')
+    username = forms.CharField(label='이름은?', min_length=2)
 
 
 def toppage(request):
@@ -79,3 +79,5 @@ def start_quiz(request, pk):
         # 'username': username,
     }
     return render(request, 'start_quiz.html', ctx)
+
+
