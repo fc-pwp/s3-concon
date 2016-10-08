@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.shortcuts import redirect
 from django import forms
 
 from .models import Quiz
@@ -45,7 +46,8 @@ def start_quiz(request, pk):
     elif request.method == 'POST':
         quizform = StartQuizForm(request.POST)
         if quizform.is_valid():
-            raise Exception('잘 됐네. 다음 수업에서 봅시다.')
+            url = '/quiz/{pk}/questions/1/'.format(pk=quiz_info.pk)
+            return redirect(url)
 
     ctx = {
         'form': quizform,

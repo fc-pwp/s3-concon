@@ -2,10 +2,20 @@
 <html>
     <head>
         <title>퀴즈 시작!</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
+
     </head>
 
-    <body>
+    <body class="container">
         <h3>{{ quiz.title }}</h3>
+
+        {% if quiz.image %}
+        <p><img src="{{ quiz.image.url }}" /></p>
+        {% endif %}
 
         <p>자, {{ quiz.pk }}번 퀴즈를 시작하지</p>
 
@@ -15,7 +25,7 @@
             {% csrf_token %}
 
             {{ form.as_p }}
-            <button type="submit">퀴즈 시작!</button>
+            <button type="submit" class="btn btn-primary btn-lg">퀴즈 시작!</button>
         </form>
     </body>
 </html>

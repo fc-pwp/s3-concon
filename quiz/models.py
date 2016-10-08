@@ -45,3 +45,11 @@ class Result(models.Model):
     )
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+
+class UserScore(models.Model):
+    session_key = models.CharField(max_length=32)
+    previous = models.OneToOneField('self', null=True)
+    quiz = models.ForeignKey(Quiz)
+    answer = models.ForeignKey(Answer)
+    created = models.DateTimeField(auto_now_add=True)
