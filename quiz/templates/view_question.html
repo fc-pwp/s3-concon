@@ -17,6 +17,7 @@
 
         <form method="POST" action="">
         {% csrf_token %}
+        <input type="hidden" name="previous" value="{{ previous }}" />
         {% for answer in answers %}
 <p>
     <input type="radio" name="sequence" value="{{ answer.sequence }}" />

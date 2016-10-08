@@ -60,6 +60,13 @@ def start_quiz(request, pk):
 
 
 def view_question(request, pk, seq):
+    previous = request.GET.get('previous')
+    if not previous:
+        previous = request.POST.get('previous')
+    if previous:
+        previous_info = UserScore.objects.get(id=previous)
+    else:
+        previous_info = None
     # pk = Quiz의 기본키(pk)
     # seq = Question의 순번(sequence)
     seq = int(seq)
@@ -81,13 +88,18 @@ def view_question(request, pk, seq):
         score.quiz = quiz_info
         score.answer = user_answer
         score.session_key = request.session.session_key
+        score.previous = previous_info
         score.save()
 
         if has_next:
-            url = '/quiz/{pk}/questions/{seq}/'.format(
+            url = '/quiz/{pk}/questions/{seq}/?previous={prev}'.format(
                 pk=quiz_info.pk,
                 seq=question_info.sequence + 1,
+                prev=score.pk,
             )
+            return redirect(url)
+        else:
+            url = '/quiz/{pk}/result/'.format(pk=quiz_info.pk)
             return redirect(url)
 
     ctx = {
