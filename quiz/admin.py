@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from .models import Quiz
 from .models import Question
+from .models import Answer
 
 
 class QuizAdmin(admin.ModelAdmin):
@@ -19,3 +20,5 @@ class QuestionAdmin(admin.ModelAdmin):
     list_filter = ['quiz', 'sequence']
 
 admin.site.register(Question, QuestionAdmin)
+
+admin.site.register(Answer)

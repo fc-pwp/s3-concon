@@ -4,6 +4,7 @@ from django import forms
 
 from .models import Quiz
 from .models import Question
+from .models import Answer
 
 
 class StartQuizForm(forms.Form):
@@ -64,8 +65,16 @@ def view_question(request, pk, seq):
     quiz_info = Quiz.objects.get(id=pk)
     # question_info = Question.objects.get(퀴즈=6번퀴즈, 순번=1)
     question_info = Question.objects.get(quiz=quiz_info, sequence=seq)
+    has_next = Question.objects \
+        .filter(quiz=quiz_info, sequence=seq+1).exists()
+
+    answer_list = Answer.objects \
+        .filter(question=question_info).order_by('sequence')
 
     ctx = {
-
+        'quiz': quiz_info,
+        'question': question_info,
+        'answers': answer_list,
+        'has_next': has_next,
     }
     return render(request, 'view_question.html', ctx)

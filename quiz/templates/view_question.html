@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>{{ quiz.title }}의 {{ question.sequence }}번 문제</title>
+    </head>
+
+    <body>
+
+        <h3>{{ quiz.title }}의 {{ question.sequence }}번 문제</h3>
+
+        <div>{{ question.title }}</div>
+
+        {% if question.image %}
+            <p><img src="{{ question.image.url }}" /></p>
+        {% endif %}
+
+        <form method="POST" action="">
+        {% csrf_token %}
+        {% for answer in answers %}
+<p>
+    <input type="radio" name="sequence" value="{{ answer.sequence }}" />
+    {{ answer.content }}
+</p>
+        {% endfor %}
+
+        <button type="submit">
+            다음 문제로 이동!
+        </button>
+        </form>
+    </body>
+</html>
