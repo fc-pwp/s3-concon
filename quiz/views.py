@@ -3,6 +3,7 @@ from django.shortcuts import redirect
 from django import forms
 
 from .models import Quiz
+from .models import Question
 
 
 class StartQuizForm(forms.Form):
@@ -54,3 +55,17 @@ def start_quiz(request, pk):
         'quiz': quiz_info,
     }
     return render(request, 'start_quiz.html', ctx)
+
+
+def view_question(request, pk, seq):
+    # pk = Quiz의 기본키(pk)
+    # seq = Question의 순번(sequence)
+    seq = int(seq)
+    quiz_info = Quiz.objects.get(id=pk)
+    # question_info = Question.objects.get(퀴즈=6번퀴즈, 순번=1)
+    question_info = Question.objects.get(quiz=quiz_info, sequence=seq)
+
+    ctx = {
+
+    }
+    return render(request, 'view_question.html', ctx)
