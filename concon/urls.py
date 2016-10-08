@@ -6,7 +6,7 @@ from django.conf import settings
 from quiz.views import toppage
 from quiz.views import list_quiz
 from quiz.views import start_quiz
-from quiz.views import view_question
+from quiz.views import view_question  # 여기!!!
 
 
 urlpatterns = [
