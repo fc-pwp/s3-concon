@@ -25,7 +25,11 @@
         {% endfor %}
 
         <button type="submit">
+            {% if has_next %}
             다음 문제로 이동!
+            {% else %}
+            결과 보기로 이동!
+            {% endif %}
         </button>
         </form>
     </body>

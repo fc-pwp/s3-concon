@@ -5,6 +5,7 @@ from django import forms
 from .models import Quiz
 from .models import Question
 from .models import Answer
+from .models import UserScore
 
 
 class StartQuizForm(forms.Form):
@@ -70,6 +71,24 @@ def view_question(request, pk, seq):
 
     answer_list = Answer.objects \
         .filter(question=question_info).order_by('sequence')
+
+    if request.method == 'POST':
+        answer_seq = request.POST['sequence']  # html input 태그의 name 속성 값
+        user_answer = Answer.objects \
+            .get(question=question_info, sequence=answer_seq)
+
+        score = UserScore()
+        score.quiz = quiz_info
+        score.answer = user_answer
+        score.session_key = request.session.session_key
+        score.save()
+
+        if has_next:
+            url = '/quiz/{pk}/questions/{seq}/'.format(
+                pk=quiz_info.pk,
+                seq=question_info.sequence + 1,
+            )
+            return redirect(url)
 
     ctx = {
         'quiz': quiz_info,
