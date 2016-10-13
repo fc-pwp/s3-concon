@@ -6,6 +6,7 @@ from .models import Quiz
 from .models import Question
 from .models import Answer
 from .models import UserScore
+from .models import Result
 
 
 class StartQuizForm(forms.Form):
@@ -59,6 +60,7 @@ def start_quiz(request, pk):
     return render(request, 'start_quiz.html', ctx)
 
 
+# http://localhost:8080/quiz/6/questions/1/
 def view_question(request, pk, seq):
     previous = request.GET.get('previous')
     if not previous:
@@ -85,9 +87,9 @@ def view_question(request, pk, seq):
             .get(question=question_info, sequence=answer_seq)
 
         score = UserScore()
+        score.session_key = request.session.session_key
         score.quiz = quiz_info
         score.answer = user_answer
-        score.session_key = request.session.session_key
         score.previous = previous_info
         score.save()
 
@@ -109,3 +111,32 @@ def view_question(request, pk, seq):
         'has_next': has_next,
     }
     return render(request, 'view_question.html', ctx)
+
+
+def view_result(request, pk):
+    quiz_info = Quiz.objects.get(id=pk)
+    session_key = request.session.session_key
+    score = UserScore.objects \
+                .filter(session_key=session_key, quiz=quiz_info) \
+                .order_by('-created').first()
+
+    code = score.answer.code
+    answers = {code: 1}
+
+    while True:
+        if not score.previous:  # if score.previous is None:
+            code = score.answer.code
+            if code in answers:
+                answers[code] += 1
+            else:
+                answers[code] = 1
+            break
+        score = UserScore.objects.get(id=score.previous.pk)
+        code = score.answer.code
+        if code in answers:
+            answers[code] += 1
+        else:
+            answers[code] = 1
+
+    result_code = sorted(answers, key=answers.get, reverse=True)
+    result = Result.objects.get(quiz=quiz_info, code=result_code[0])

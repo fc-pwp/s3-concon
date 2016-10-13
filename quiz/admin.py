@@ -3,6 +3,7 @@ from django.contrib import admin
 from .models import Quiz
 from .models import Question
 from .models import Answer
+from .models import UserScore
 
 
 class QuizAdmin(admin.ModelAdmin):
@@ -22,3 +23,4 @@ class QuestionAdmin(admin.ModelAdmin):
 admin.site.register(Question, QuestionAdmin)
 
 admin.site.register(Answer)
+admin.site.register(UserScore)

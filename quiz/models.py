@@ -25,6 +25,8 @@ class Question(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return '{} : {}'.format(self.sequence, self.title)
 
 class Answer(models.Model):
     question = models.ForeignKey(Question)
@@ -53,3 +55,6 @@ class UserScore(models.Model):
     quiz = models.ForeignKey(Quiz)
     answer = models.ForeignKey(Answer)
     created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return '{pk}'.format(pk=self.id)
