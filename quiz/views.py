@@ -140,3 +140,9 @@ def view_result(request, pk):
 
     result_code = sorted(answers, key=answers.get, reverse=True)
     result = Result.objects.get(quiz=quiz_info, code=result_code[0])
+
+    ctx = {
+        'result': result,
+    }
+
+    return render(request, 'result.html', ctx)
